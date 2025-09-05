@@ -343,10 +343,10 @@ section {
     }
 
     .preloader-mask {
-        mask:
-            linear-gradient(var(--base-300), var(--base-300)),
-            url("mask.svg") center/90% no-repeat;
-        mask-composite: subtract;
+        mask: url("mask.svg") center/90% no-repeat;
+        -webkit-mask: url("mask.svg") center/90% no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-repeat: no-repeat;
     }
 
     .preloader-footer {
