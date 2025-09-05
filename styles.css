@@ -42,6 +42,10 @@ section.hero {
   z-index: 0;
 }
 
+nav .logo p {
+    font-weight: 700;
+}
+
 .hero-logo {
     position: absolute;
     top: 50%;
