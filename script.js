@@ -146,7 +146,7 @@ document.fonts.ready.then(() => {
           duration: 1,
           ease: "power4.out",
         },
-        "-=0.8", // slight delay for smoother feel
+        "+=0.3", // wait a bit longer so GPU can settle
       )
       // ✅ Reveal gradient (already running) after preloader
       .call(() => {
