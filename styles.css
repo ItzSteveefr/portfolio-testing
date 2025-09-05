@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Host+grotesk:ital,wght@0,300..800;1,300..800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Host+Grotesk:ital,wght@0,300..800;1,300..800&display=swap");
 
 :root {
     --base-100: #181717;
@@ -22,12 +22,54 @@ img {
     object-fit: cover;
 }
 
+p {
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: 450;
+}
+
+/* Container */
 .container {
     position: relative;
     width: 100%;
     height: 100%;
 }
 
+/* Navigation */
+nav,
+.hero-footer {
+    position: absolute;
+    left: 0;
+    width: 100vw;
+    padding: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 2;
+}
+
+.nav-items {
+    display: flex;
+    gap: 4rem;
+}
+
+nav .logo p {
+    font-weight: 700;
+}
+
+.hero-footer {
+    bottom: 0;
+}
+
+/* Sections */
+section {
+    position: relative;
+    width: 100vw;
+    height: 100svh;
+    overflow: hidden;
+}
+
+/* Hero Section */
 .hero {
     position: relative;
     width: 100%;
@@ -60,19 +102,15 @@ img {
     color: var(--base-300);
 }
 
-.contact-btn {
+.hero-logo {
     position: absolute;
-    top: 2rem;
-    right: 2rem;
-}
-
-.menu-btn {
-    position: absolute;
-    bottom: 2rem;
+    top: 50%;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translate(-50%, -50%);
+    width: 25%;
 }
 
+/* Header */
 .header h1 {
     font-size: 12rem;
     font-weight: 500;
@@ -80,6 +118,7 @@ img {
     line-height: 1;
 }
 
+/* Hero Footer */
 .hero-footer {
     position: absolute;
     border: 0;
@@ -102,6 +141,21 @@ img {
     width: 25%;
     text-align: right;
     opacity: 0.5;
+    color: var(--base-300);
+}
+
+/* Buttons */
+.contact-btn {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+}
+
+.menu-btn {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .btn {
@@ -128,6 +182,13 @@ img {
     border-radius: 100%;
 }
 
+.btn-label span {
+    font-size: 0.9rem;
+    font-weight: 450;
+    line-height: 1;
+}
+
+/* Preloader */
 .preloader-progress,
 .preloader-mask,
 .preloader-content {
@@ -137,12 +198,6 @@ img {
     width: 100%;
     height: 100svh;
     pointer-events: none;
-}
-
-.btn-label span {
-    font-size: 0.9rem;
-    font-weight: 450;
-    line-height: 1;
 }
 
 .preloader-progress {
@@ -210,6 +265,16 @@ img {
     opacity: 0.5;
 }
 
+/* Gradient Canvas */
+.gradient-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* Animation Elements */
 .line,
 .char {
     position: relative;
@@ -218,6 +283,15 @@ img {
     will-change: transform;
 }
 
+/* 💻 Desktop Media Queries */
+@media (max-width: 1000px) {
+    nav {
+        flex-direction: column;
+        gap: 2rem;
+    }
+}
+
+/* 📱 Mobile Media Queries */
 @media (max-width: 800px) {
     .hero-inner {
         border-radius: 3rem;
@@ -236,8 +310,9 @@ img {
 
     .hero-footer {
         flex-direction: column;
-        gap: 0.5rem;
+        gap: 1rem;
         align-items: flex-start;
+        text-align: center;
     }
 
     .hero-footer h3,
@@ -270,90 +345,33 @@ img {
     .preloader-mask {
         mask:
             linear-gradient(var(--base-300), var(--base-300)),
-            url("/mask.svg") center/90% no-repeat;
+            url("mask.svg") center/90% no-repeat;
         mask-composite: subtract;
     }
 
     .preloader-footer {
         width: 75%;
     }
+
+    .hero-logo {
+        width: 50%; /* Bigger logo for small screens */
+    }
+
+    p {
+        font-size: 0.8rem; /* Slightly smaller text */
+    }
 }
 
-@import url("https://fonts.googleapis.com/css2?family=Host+Grotesk:ital,wght@0,300..800;1,300..800&display=swap");
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: "Host Grotesk";
-}
-
-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-p {
-    color: #fff;
-    font-size: 0.9rem;
-    font-weight: 450;
-}
-
-nav,
-.hero-footer {
-    position: absolute;
-    left: 0;
-    width: 100vw;
-    padding: 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 2;
-}
-
-.nav-items {
-    display: flex;
-    gap: 4rem;
-}
-
-nav .logo p {
-    font-weight: 700;
-}
-
-.hero-footer {
-    bottom: 0;
-}
-
-section {
-    position: relative;
-    width: 100vw;
-    height: 100svh;
-    overflow: hidden;
-}
-
-.hero-logo {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 25%;
-}
-
-.gradient-canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-
-@media (max-width: 1000px) {
-    nav {
-        flex-direction: column;
-        gap: 2rem;
+@media (max-width: 500px) {
+    .hero-logo {
+        width: 60%;
+    }
+    
+    .preloader-logo h1 {
+        font-size: 1.5rem;
+    }
+    
+    p {
+        font-size: 0.75rem;
     }
 }
