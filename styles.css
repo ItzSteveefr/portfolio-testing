@@ -182,7 +182,7 @@ img {
     line-height: 1;
 }
 
-.preload-mask {
+.preloader-mask {
     background-color: var(--base-100);
     background:
         linear-gradient(var(--base-300), var(--base-300)),
