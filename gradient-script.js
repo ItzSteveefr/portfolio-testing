@@ -1,4 +1,4 @@
-// gradient-script.js — Gradient Fluid Background
+// gradient-script.js — Gradient Fluid Background with Warm-up Support
 
 import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.150.1/build/three.module.js";
 import { vertexShader, fluidShader, displayShader } from "./shaders.js";
@@ -8,6 +8,8 @@ let fluidMaterial, displayMaterial;
 let fluidTarget1, fluidTarget2;
 let currentFluidTarget, previousFluidTarget;
 let frameCount = 0;
+let gradientCanvas, fluidPlane, displayPlane;
+let isAnimating = false;
 
 const config = {
   brushSize: 25.0,
@@ -31,13 +33,15 @@ function hexToRgb(hex) {
   return [r, g, b];
 }
 
-export function startGradient() {
-  console.log("🌈 Gradient started after preloader");
+export function initGradient() {
+  if (isAnimating) return; // Prevent multiple inits
+
+  console.log("🌈 Initializing gradient (warm-up)");
 
   camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
   renderer = new THREE.WebGLRenderer({ antialias: true });
 
-  const gradientCanvas = document.querySelector(".gradient-canvas");
+  gradientCanvas = document.querySelector(".gradient-canvas");
   renderer.setSize(window.innerWidth, window.innerHeight);
   gradientCanvas.appendChild(renderer.domElement);
 
@@ -93,8 +97,8 @@ export function startGradient() {
   });
 
   const geometry = new THREE.PlaneGeometry(2, 2);
-  const fluidPlane = new THREE.Mesh(geometry, fluidMaterial);
-  const displayPlane = new THREE.Mesh(geometry, displayMaterial);
+  fluidPlane = new THREE.Mesh(geometry, fluidMaterial);
+  displayPlane = new THREE.Mesh(geometry, displayMaterial);
 
   let mouseX = 0, mouseY = 0;
   let prevMouseX = 0, prevMouseY = 0;
@@ -115,6 +119,7 @@ export function startGradient() {
   });
 
   function animate() {
+    if (!isAnimating) return;
     requestAnimationFrame(animate);
 
     const time = performance.now() * 0.001;
@@ -144,15 +149,20 @@ export function startGradient() {
   window.addEventListener("resize", () => {
     const width = window.innerWidth;
     const height = window.innerHeight;
-
     renderer.setSize(width, height);
     fluidMaterial.uniforms.iResolution.value.set(width, height);
     displayMaterial.uniforms.iResolution.value.set(width, height);
-
     fluidTarget1.setSize(width, height);
     fluidTarget2.setSize(width, height);
     frameCount = 0;
   });
 
+  isAnimating = true;
   animate();
+}
+
+export function startGradient() {
+  console.log("✨ Gradient revealed");
+  // Already animating from initGradient, just ensure flag is true
+  isAnimating = true;
 }
