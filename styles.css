@@ -105,6 +105,10 @@ nav .logo p {
     align-items: flex-end;
 }
 
+.hero-footer p:first-child {
+    text-align: left;
+}
+
 .hero-footer h3 {
     font-size: 2rem;
     font-weight: 400;
