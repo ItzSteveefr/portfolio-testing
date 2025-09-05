@@ -1,4 +1,4 @@
-// script.js — Preloader + GSAP animations + Asset Preloading
+// script.js — Preloader + GSAP animations + Asset Preloading + Shader Warm-up
 
 console.log("Preloader script loaded ✅");
 
@@ -17,6 +17,17 @@ function preloadAssets() {
   });
 
   return Promise.all(promises);
+}
+
+let gradientModule;
+
+// Warm-up gradient after 1.5s while preloader is running
+function warmupGradient() {
+  import("./gradient-script.js").then(mod => {
+    gradientModule = mod;
+    mod.initGradient();
+    console.log("🌈 Gradient warmed up in background");
+  });
 }
 
 document.fonts.ready.then(() => {
@@ -42,6 +53,7 @@ document.fonts.ready.then(() => {
 
     const splits = createSplitTexts(splitElements);
 
+    // Initial GSAP set state
     gsap.set([splits.logoChars.chars], { x: "100%" });
     gsap.set([splits.footerLines.lines, splits.heroFooter.lines], { y: "100%" });
 
@@ -84,6 +96,10 @@ document.fonts.ready.then(() => {
       )
       .add(animateProgress(), "<")
       .set(".preloader-progress", { backgroundColor: "var(--base-300)" })
+      .call(() => {
+        // Warm up gradient in background after ~1.5s
+        setTimeout(warmupGradient, 1500);
+      })
       .to(
         splits.logoChars.chars,
         {
@@ -130,13 +146,11 @@ document.fonts.ready.then(() => {
           duration: 1,
           ease: "power4.out",
         },
-        "-=1.0",
+        "-=0.8", // slight delay for smoother feel
       )
-      // ✅ Start gradient after preloader finishes
+      // ✅ Reveal gradient (already running) after preloader
       .call(() => {
-        import("./gradient-script.js").then(mod => {
-          mod.startGradient();
-        });
+        if (gradientModule) gradientModule.startGradient();
       });
   });
 });
