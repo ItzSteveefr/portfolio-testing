@@ -1,4 +1,4 @@
-// gradient-script.js — Gradient Fluid Background with Warm-up Support
+// gradient-script.js — Gradient Fluid Background with Warm-up + Pre-render Frames
 
 import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.150.1/build/three.module.js";
 import { vertexShader, fluidShader, displayShader } from "./shaders.js";
@@ -118,10 +118,7 @@ export function initGradient() {
     fluidMaterial.uniforms.iMouse.value.set(0, 0, 0, 0);
   });
 
-  function animate() {
-    if (!isAnimating) return;
-    requestAnimationFrame(animate);
-
+  function renderFrame() {
     const time = performance.now() * 0.001;
     fluidMaterial.uniforms.iTime.value = time;
     displayMaterial.uniforms.iTime.value = time;
@@ -146,6 +143,12 @@ export function initGradient() {
     frameCount++;
   }
 
+  function animate() {
+    if (!isAnimating) return;
+    requestAnimationFrame(animate);
+    renderFrame();
+  }
+
   window.addEventListener("resize", () => {
     const width = window.innerWidth;
     const height = window.innerHeight;
@@ -157,12 +160,17 @@ export function initGradient() {
     frameCount = 0;
   });
 
+  // Start animating
   isAnimating = true;
   animate();
+
+  // Pre-render a few frames during preload to warm GPU
+  for (let i = 0; i < 20; i++) {
+    renderFrame();
+  }
 }
 
 export function startGradient() {
   console.log("✨ Gradient revealed");
-  // Already animating from initGradient, just ensure flag is true
-  isAnimating = true;
+  isAnimating = true; // Already animating from initGradient
 }
